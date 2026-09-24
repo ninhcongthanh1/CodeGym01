@@ -39,12 +39,12 @@ Các mục tiêu trên là những yếu tố có thể xác định trực ti�
 4. Đối tượng sử dụng
 Dựa trên các actor và user story trong Product Backlog, các đối tượng chính của hệ thống bao gồm:
 
-Actor	Vai trò	Chức năng chính
-Quản trị viên / Người quản lý hệ thống	Quản lý chung, giám sát và điều hành hoạt động thực tập	Quản lý tài khoản, cấu hình hệ thống, giám sát tiến độ, báo cáo tổng hợp
-Giảng viên / Người phụ trách	Theo dõi và đánh giá sinh viên trong quá trình thực tập	Xem hồ sơ sinh viên, theo dõi tiến độ, đánh giá, cập nhật kết quả
-Sinh viên thực tập	Người tham gia chương trình thực tập	Cập nhật thông tin cá nhân, theo dõi nhiệm vụ, nộp kết quả, xem tiến độ
-Đơn vị/Doanh nghiệp thực tập	Đối tác tiếp nhận sinh viên thực tập	Quản lý địa điểm, người hướng dẫn, theo dõi sinh viên thực tập
-Người hướng dẫn	Hướng dẫn và giám sát công việc của sinh viên	Giao nhiệm vụ, theo dõi tiến độ, đánh giá kết quả thực tập
+| Actor |	Vai trò |	Chức năng chính
+|Quản trị viên / Người quản lý hệ thống |	Quản lý chung, giám sát và điều hành hoạt động thực tập |	Quản lý tài khoản, cấu hình hệ thống, giám sát tiến độ, báo cáo tổng hợp
+|Giảng viên / Người phụ trách |	Theo dõi và đánh giá sinh viên trong quá trình thực tập |	Xem hồ sơ sinh viên, theo dõi tiến độ, đánh giá, cập nhật kết quả
+|Sinh viên thực tập |	Người tham gia chương trình thực tập |	Cập nhật thông tin cá nhân, theo dõi nhiệm vụ, nộp kết quả, xem tiến độ
+|Đơn vị/Doanh nghiệp thực tập |	Đối tác tiếp nhận sinh viên thực tập |	Quản lý địa điểm, người hướng dẫn, theo dõi sinh viên thực tập
+Người hướng dẫn |	Hướng dẫn và giám sát công việc của sinh viên |	Giao nhiệm vụ, theo dõi tiến độ, đánh giá kết quả thực tập
 Nếu Product Backlog không nêu rõ thêm các actor khác, các actor trên được xem là các nhóm chính phù hợp với phạm vi hệ thống.
 
 5. Phạm vi dự án
