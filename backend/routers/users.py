@@ -96,10 +96,16 @@ def update_user_detail(
         user_data
     )
 
-    if not user:
+    if user is None:
         raise HTTPException(
             status_code=404,
             detail="User not found"
+        )
+
+    if user == "EMAIL_EXISTS":
+        raise HTTPException(
+            status_code=409,
+            detail="Email already exists"
         )
 
     return user

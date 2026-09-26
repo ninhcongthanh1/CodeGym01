@@ -58,6 +58,14 @@ def update_user(
     if not user:
         return None
 
+    existing_email = db.query(User).filter(
+        User.email == user_data.email,
+        User.id != user_id
+    ).first()
+
+    if existing_email:
+        return "EMAIL_EXISTS"
+
     user.email = user_data.email
     user.full_name = user_data.full_name
 
