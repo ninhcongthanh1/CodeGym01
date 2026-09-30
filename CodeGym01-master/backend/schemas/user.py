@@ -21,6 +21,8 @@ class UserResponse(BaseModel):
     email: EmailStr
     full_name: str
     role: str
+    school: str | None = None
+    major: str | None = None
     is_active: bool
 
     class Config:

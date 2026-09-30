@@ -58,12 +58,41 @@ def create_new_user(
 
 @router.get("/", response_model=list[UserResponse])
 def get_all_users(
+    search: str = "",
+    school: str = "",
+    major: str = "",
     db: Session = Depends(get_db),
     current_user: User = Depends(
         require_roles("admin", "hr")
     )
 ):
-    return get_users(db)
+    query = db.query(User).filter(
+        User.role == "intern"
+    )
+
+    # Tìm theo tên, username hoặc email
+    if search:
+        keyword = f"%{search}%"
+
+        query = query.filter(
+            (User.full_name.ilike(keyword)) |
+            (User.username.ilike(keyword)) |
+            (User.email.ilike(keyword))
+        )
+
+    # Lọc theo trường
+    if school:
+        query = query.filter(
+            User.school == school
+        )
+
+    # Lọc theo ngành
+    if major:
+        query = query.filter(
+            User.major == major
+        )
+
+    return query.all()
 
 @router.get("/{user_id}", response_model=UserResponse)
 def get_user_detail(
