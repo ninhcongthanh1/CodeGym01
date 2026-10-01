@@ -28,6 +28,12 @@ from schemas.user import (
     UserStatusUpdate
 )
 
+from services.intern_service import (
+    create_intern_profile,
+    get_intern_profiles,
+    get_intern_profile_by_id
+)
+
 router = APIRouter(
     prefix="/api/users",
     tags=["Users"]
