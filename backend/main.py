@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from routers.users import router as users_router
 from database import engine, Base
 from models.user import User
 from models.intern_profile import InternProfile
@@ -10,8 +9,6 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Intern Management System")
 app.include_router(auth_router)
-
-app.include_router(users_router)
 app.include_router(intern_profiles_router)
 
 @app.get("/")

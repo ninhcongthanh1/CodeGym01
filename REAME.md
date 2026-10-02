@@ -427,7 +427,7 @@ GET /api/intern-profile/me/files/{cv|application}
 
 `PUT` nhận `multipart/form-data` gồm `school`, `major`, `phone`, `cv_file` và `application_file`. Khi tạo hồ sơ lần đầu cần gửi đủ cả CV và đơn xin thực tập; khi cập nhật có thể chỉ gửi tài liệu cần thay thế. Tệp được giới hạn PDF/DOC/DOCX, tối đa 10 MB mỗi tệp và chỉ chủ hồ sơ có thể tải xuống. Backend lưu tệp trong `backend/uploads/`, thư mục này được bỏ qua bởi Git.
 
-Frontend đăng nhập bằng tài khoản intern hiện có. Tài khoản demo `intern01` được tạo bởi `seed.py`; mật khẩu là giá trị nhập lúc seed.
+Frontend cho phép tạo tài khoản thực tập sinh mới tại màn hình đăng nhập (`POST /api/auth/register`, gồm `username`, `email`, `password`); tài khoản được đăng nhập tự động sau khi tạo. Tài khoản demo `intern01` cũng có thể đăng nhập bằng mật khẩu đã nhập khi chạy `seed.py`.
 
 ## 14. Kiểm tra quyền
 
@@ -492,6 +492,8 @@ http://localhost:5173
 ```
 
 Mở địa chỉ này bằng trình duyệt.
+
+Nếu chưa cấu hình `backend/.env`, backend dùng SQLite tại `backend/intern_management.db` để chạy local. Khi dùng MySQL, đặt `DATABASE_URL` như hướng dẫn ở mục 7. Frontend đã proxy đường dẫn `/api` tới backend ở `127.0.0.1:8000`.
 
 ## 17. Chạy toàn bộ hệ thống
 
