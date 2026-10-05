@@ -17,7 +17,9 @@ from dependencies.auth import (
     get_current_user,
     require_roles
 )
-
+import os
+from fastapi.responses import FileResponse
+from models.intern_document import InternDocument
 
 router = APIRouter(
     prefix="/api/documents",
@@ -91,6 +93,35 @@ def get_documents_by_intern(
     return get_intern_documents(
         db,
         intern_id
+    )
+
+@router.get("/{document_id}/file")
+def get_document_file(
+    document_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_roles("hr"))
+):
+    document = (
+        db.query(InternDocument)
+        .filter(InternDocument.id == document_id)
+        .first()
+    )
+
+    if not document:
+        raise HTTPException(
+            status_code=404,
+            detail="Document not found"
+        )
+
+    if not os.path.exists(document.file_path):
+        raise HTTPException(
+            status_code=404,
+            detail="File not found"
+        )
+
+    return FileResponse(
+        path=document.file_path,
+        filename=document.file_name
     )
 
 @router.patch(

@@ -100,32 +100,64 @@ def update_intern_profile(
     intern_id: int,
     intern_data: InternProfileCreate
 ):
-    intern = db.query(InternProfile).filter(
-        InternProfile.id == intern_id
-    ).first()
+    intern = (
+        db.query(InternProfile)
+        .filter(InternProfile.id == intern_id)
+        .first()
+    )
 
     if not intern:
         return None
 
-    # Kiểm tra email trùng với User khác
+    user = (
+        db.query(User)
+        .filter(User.id == intern.user_id)
+        .first()
+    )
+
+    if not user:
+        return None
+
+    # Kiểm tra email đã được tài khoản khác sử dụng chưa
     if intern_data.email:
-        existing_user = db.query(User).filter(
-            User.email == intern_data.email,
-            User.id != intern.user_id
-        ).first()
+        existing_user = (
+            db.query(User)
+            .filter(
+                User.email == intern_data.email,
+                User.id != user.id
+            )
+            .first()
+        )
 
         if existing_user:
             return "EMAIL_EXISTS"
 
-    # Kiểm tra mã sinh viên trùng với hồ sơ khác
+    # Kiểm tra mã sinh viên trùng
     if intern_data.student_id:
-        existing_student = db.query(InternProfile).filter(
-            InternProfile.student_id == intern_data.student_id,
-            InternProfile.id != intern_id
-        ).first()
+        existing_student = (
+            db.query(InternProfile)
+            .filter(
+                InternProfile.student_id == intern_data.student_id,
+                InternProfile.id != intern_id
+            )
+            .first()
+        )
 
         if existing_student:
             return "STUDENT_ID_EXISTS"
+
+    # =========================
+    # Cập nhật USER
+    # =========================
+
+    user.full_name = intern_data.full_name
+
+    if intern_data.email:
+        user.email = intern_data.email
+
+    # =========================
+    # Cập nhật INTERN PROFILE
+    # =========================
 
     intern.full_name = intern_data.full_name
     intern.date_of_birth = intern_data.date_of_birth
@@ -141,6 +173,37 @@ def update_intern_profile(
     intern.internship_end_date = intern_data.internship_end_date
 
     db.commit()
+
     db.refresh(intern)
 
     return intern
+
+def submit_intern_application(db: Session, user_id: int):
+    intern = (
+        db.query(InternProfile)
+        .filter(InternProfile.user_id == user_id)
+        .first()
+    )
+
+    if not intern:
+        return "PROFILE_NOT_FOUND"
+
+    if intern.status == "approved":
+        return "ALREADY_APPROVED"
+
+    if intern.status == "pending":
+        return "ALREADY_PENDING"
+
+    intern.status = "pending"
+
+    db.commit()
+    db.refresh(intern)
+
+    return intern
+
+def get_my_intern_profile(db: Session, user_id: int):
+    return (
+        db.query(InternProfile)
+        .filter(InternProfile.user_id == user_id)
+        .first()
+    )

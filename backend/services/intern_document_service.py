@@ -85,19 +85,76 @@ def get_intern_documents(
         InternDocument.intern_id == intern_id
     ).all()
 
-def update_document_status(
-    db: Session,
-    document_id: int,
-    status: str
-):
-    document = db.query(InternDocument).filter(
-        InternDocument.id == document_id
-    ).first()
+def update_document_status(db: Session, document_id: int, status: str):
+    document = (
+        db.query(InternDocument)
+        .filter(InternDocument.id == document_id)
+        .first()
+    )
 
     if not document:
         return None
 
     document.status = status
+
+    db.flush()
+
+    # Lấy tất cả tài liệu của intern
+    documents = (
+        db.query(InternDocument)
+        .filter(InternDocument.intern_id == document.intern_id)
+        .all()
+    )
+
+    # Kiểm tra trạng thái CV và đơn thực tập
+    cv = next(
+        (doc for doc in documents if doc.document_type == "cv"),
+        None
+    )
+
+    application = next(
+        (
+            doc
+            for doc in documents
+            if doc.document_type == "internship_application"
+        ),
+        None
+    )
+
+    # Lấy hồ sơ thực tập sinh
+    intern = document.intern
+
+    print("===== DEBUG DOCUMENT STATUS =====")
+    print("Document ID:", document.id)
+    print("Intern ID:", document.intern_id)
+    print("Intern Profile ID:", intern.id)
+    print("Old Intern Status:", intern.status)
+    print("CV:", cv.status if cv else "NOT FOUND")
+    print(
+        "Application:",
+        application.status if application else "NOT FOUND"
+    )
+    print("=================================")
+
+    if cv and cv.status == "rejected":
+        intern.status = "rejected"
+
+    elif application and application.status == "rejected":
+        intern.status = "rejected"
+
+    elif cv and application:
+        if cv.status == "approved" and application.status == "approved":
+            intern.status = "approved"
+        else:
+            intern.status = "pending"
+
+    else:
+        if cv and cv.status == "approved":
+            intern.status = "pending"
+        elif application and application.status == "approved":
+            intern.status = "pending"
+        else:
+            intern.status = "pending"
 
     db.commit()
     db.refresh(document)

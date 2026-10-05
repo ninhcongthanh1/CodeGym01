@@ -1,122 +1,137 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
-function App() {
-  const [count, setCount] = useState(0)
+import "./App.css";
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+import Login from "./pages/Login";
+import AdminDashboard from "./pages/AdminDashboard";
+import HRDashboard from "./pages/HRDashboard";
+import MentorDashboard from "./pages/MentorDashboard";
+import InternDashboard from "./pages/InternDashboard";
 
-      <div className="ticks"></div>
+import { jwtDecode } from "jwt-decode";
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+import HRInternCreate from "./pages/HRInternCreate";
+import HRInterns from "./pages/HRInterns";
+import HRInternEdit from "./pages/HRInternEdit";
+import HRInternDocuments from "./pages/HRInternDocuments";
+import InternApplication from "./pages/InternApplication";
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+// ==============================
+// LẤY USER TỪ JWT
+// ==============================
+
+const getUserFromToken = () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    return null;
+  }
+
+  try {
+    return jwtDecode(token);
+  } catch {
+    localStorage.removeItem("token");
+    return null;
+  }
+};
+
+// ==============================
+// KIỂM TRA ROLE
+// ==============================
+
+function RoleBasedDashboard() {
+  const currentUser = getUserFromToken();
+
+  if (!currentUser) {
+    return <Navigate to="/login" replace />;
+  }
+
+  switch (currentUser.role) {
+    case "admin":
+      return <AdminDashboard />;
+
+    case "hr":
+      return <HRDashboard />;
+
+    case "mentor":
+      return <MentorDashboard />;
+
+    case "intern":
+      return <InternDashboard />;
+
+    default:
+      localStorage.removeItem("token");
+
+      return (
+        <Navigate
+          to="/login"
+          replace
+        />
+      );
+  }
 }
 
-export default App
+// ==============================
+// APP
+// ==============================
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+
+        {/* LOGIN */}
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        {/* DASHBOARD THEO ROLE */}
+        <Route
+          path="/"
+          element={<RoleBasedDashboard />}
+        />
+
+        {/* URL KHÔNG TỒN TẠI */}
+        <Route
+          path="*"
+          element={
+            <Navigate
+              to="/"
+              replace
+            />
+          }
+        />
+
+        <Route
+          path="/hr/interns/create"
+          element={<HRInternCreate />}
+        />
+        <Route
+          path="/hr/interns"
+          element={<HRInterns />}
+        />
+        <Route
+          path="/hr/interns/:internId/edit"
+          element={<HRInternEdit />}
+        />
+        <Route
+          path="/hr/interns/:internId/documents"
+          element={<HRInternDocuments />}
+        />
+        <Route
+          path="/intern/application"
+          element={<InternApplication />}
+        />
+
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;

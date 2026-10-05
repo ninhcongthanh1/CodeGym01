@@ -77,9 +77,11 @@ def require_admin(
 
 
 def require_roles(*allowed_roles):
-    def role_checker(
-        current_user: User = Depends(get_current_user)
-    ):
+    def role_checker(current_user: User = Depends(get_current_user)):
+        print("DEBUG USER:", current_user.username)
+        print("DEBUG ROLE:", current_user.role)
+        print("DEBUG ALLOWED:", allowed_roles)
+
         if current_user.role not in allowed_roles:
             raise HTTPException(
                 status_code=403,
