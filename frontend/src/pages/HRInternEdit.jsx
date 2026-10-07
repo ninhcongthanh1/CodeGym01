@@ -28,6 +28,7 @@ function HRInternEdit() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  
 
   useEffect(() => {
     const loadIntern = async () => {
@@ -96,6 +97,14 @@ function HRInternEdit() {
       navigate("/login");
       return;
     }
+    if (
+  form.internship_start_date &&
+  form.internship_end_date &&
+  form.internship_end_date < form.internship_start_date
+) {
+  setError("Ngày kết thúc phải lớn hơn hoặc bằng ngày bắt đầu.");
+  return;
+}
 
     setSaving(true);
     setError("");
@@ -117,10 +126,23 @@ function HRInternEdit() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data.detail || "Không thể cập nhật thông tin"
-        );
-      }
+  let message = "Không thể cập nhật thông tin";
+
+  if (typeof data.detail === "string") {
+    message = data.detail;
+  } else if (Array.isArray(data.detail)) {
+    message = data.detail
+      .map((item) => item?.msg || item?.message || String(item))
+      .join(", ");
+  } else if (data.detail && typeof data.detail === "object") {
+    message =
+      data.detail.msg ||
+      data.detail.message ||
+      JSON.stringify(data.detail);
+  }
+
+  throw new Error(message);
+}
 
       setSuccess("Cập nhật thông tin thành công.");
 
@@ -502,6 +524,7 @@ function HRInternEdit() {
                       type="date"
                       name="internship_end_date"
                       value={form.internship_end_date}
+                      min={form.internship_start_date || undefined}
                       onChange={handleChange}
                     />
 

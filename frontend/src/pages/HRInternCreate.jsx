@@ -9,7 +9,7 @@ function HRInternCreate() {
 
   const [form, setForm] = useState({
     full_name: "",
-    dob: "",
+    date_of_birth: "",
     gender: "",
     phone: "",
     email: "",
@@ -41,6 +41,18 @@ function HRInternCreate() {
       return;
     }
 
+    // Kiểm tra ngày thực tập
+    if (
+      form.internship_start_date &&
+      form.internship_end_date &&
+      form.internship_end_date < form.internship_start_date
+    ) {
+      setError(
+        "Ngày kết thúc phải lớn hơn hoặc bằng ngày bắt đầu."
+      );
+      return;
+    }
+
     setLoading(true);
     setError("");
     setSuccess("");
@@ -61,9 +73,17 @@ function HRInternCreate() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data.detail || "Không thể tạo thực tập sinh"
-        );
+        let message = "Không thể tạo thực tập sinh";
+
+        if (Array.isArray(data.detail)) {
+          message = data.detail
+            .map((item) => item.msg)
+            .join(", ");
+        } else if (data.detail) {
+          message = data.detail;
+        }
+
+        throw new Error(message);
       }
 
       setSuccess(
@@ -87,15 +107,12 @@ function HRInternCreate() {
 
   return (
     <div className="create-page">
-
       <aside className="create-sidebar">
-
         <div className="create-logo">
           Intern<span>Management</span>
         </div>
 
         <nav className="create-nav">
-
           <button onClick={() => navigate("/")}>
             📊 &nbsp; Dashboard
           </button>
@@ -114,15 +131,11 @@ function HRInternCreate() {
           <button>
             👥 &nbsp; Người dùng
           </button>
-
         </nav>
-
       </aside>
 
       <main className="create-main">
-
         <header className="create-header">
-
           <div className="create-header-left">
             <h1>Thêm thực tập sinh</h1>
             <p>
@@ -131,7 +144,6 @@ function HRInternCreate() {
           </div>
 
           <div className="create-user">
-
             <div className="create-avatar">
               HR
             </div>
@@ -144,13 +156,10 @@ function HRInternCreate() {
             >
               Đăng xuất
             </button>
-
           </div>
-
         </header>
 
         <div className="create-content">
-
           <button
             className="create-back"
             onClick={() => navigate("/hr/interns")}
@@ -159,7 +168,6 @@ function HRInternCreate() {
           </button>
 
           <section className="create-card">
-
             <div className="create-card-header">
               <h2>Thông tin thực tập sinh</h2>
               <p>
@@ -171,7 +179,6 @@ function HRInternCreate() {
               className="create-form"
               onSubmit={handleSubmit}
             >
-
               {error && (
                 <div className="create-error">
                   {error}
@@ -187,21 +194,16 @@ function HRInternCreate() {
               {/* THÔNG TIN CÁ NHÂN */}
 
               <div className="create-section">
-
                 <div className="create-section-title">
-
                   <div className="create-section-number">
                     01
                   </div>
 
                   <h3>Thông tin cá nhân</h3>
-
                 </div>
 
                 <div className="create-grid">
-
                   <div className="create-field">
-
                     <label>Họ và tên *</label>
 
                     <input
@@ -212,11 +214,9 @@ function HRInternCreate() {
                       placeholder="Nguyễn Văn A"
                       required
                     />
-
                   </div>
 
                   <div className="create-field">
-
                     <label>Mã sinh viên</label>
 
                     <input
@@ -226,24 +226,20 @@ function HRInternCreate() {
                       onChange={handleChange}
                       placeholder="SV001"
                     />
-
                   </div>
 
                   <div className="create-field">
-
                     <label>Ngày sinh</label>
 
                     <input
                       type="date"
-                      name="dob"
-                      value={form.dob}
+                      name="date_of_birth"
+                      value={form.date_of_birth}
                       onChange={handleChange}
                     />
-
                   </div>
 
                   <div className="create-field">
-
                     <label>Giới tính</label>
 
                     <select
@@ -267,11 +263,9 @@ function HRInternCreate() {
                         Khác
                       </option>
                     </select>
-
                   </div>
 
                   <div className="create-field">
-
                     <label>Số điện thoại</label>
 
                     <input
@@ -281,11 +275,9 @@ function HRInternCreate() {
                       onChange={handleChange}
                       placeholder="09xxxxxxxx"
                     />
-
                   </div>
 
                   <div className="create-field">
-
                     <label>Email *</label>
 
                     <input
@@ -296,11 +288,9 @@ function HRInternCreate() {
                       placeholder="example@gmail.com"
                       required
                     />
-
                   </div>
 
                   <div className="create-field full">
-
                     <label>Địa chỉ</label>
 
                     <input
@@ -310,31 +300,23 @@ function HRInternCreate() {
                       onChange={handleChange}
                       placeholder="Địa chỉ hiện tại"
                     />
-
                   </div>
-
                 </div>
-
               </div>
 
               {/* THÔNG TIN HỌC TẬP */}
 
               <div className="create-section">
-
                 <div className="create-section-title">
-
                   <div className="create-section-number">
                     02
                   </div>
 
                   <h3>Thông tin học tập</h3>
-
                 </div>
 
                 <div className="create-grid">
-
                   <div className="create-field">
-
                     <label>Trường</label>
 
                     <input
@@ -344,11 +326,9 @@ function HRInternCreate() {
                       onChange={handleChange}
                       placeholder="Tên trường đại học"
                     />
-
                   </div>
 
                   <div className="create-field">
-
                     <label>Chuyên ngành</label>
 
                     <input
@@ -358,31 +338,23 @@ function HRInternCreate() {
                       onChange={handleChange}
                       placeholder="Công nghệ thông tin"
                     />
-
                   </div>
-
                 </div>
-
               </div>
 
               {/* THÔNG TIN THỰC TẬP */}
 
               <div className="create-section">
-
                 <div className="create-section-title">
-
                   <div className="create-section-number">
                     03
                   </div>
 
                   <h3>Thông tin thực tập</h3>
-
                 </div>
 
                 <div className="create-grid">
-
                   <div className="create-field">
-
                     <label>Vị trí thực tập</label>
 
                     <input
@@ -392,14 +364,11 @@ function HRInternCreate() {
                       onChange={handleChange}
                       placeholder="Frontend Developer"
                     />
-
                   </div>
 
-                  <div className="create-field">
-                  </div>
+                  <div className="create-field"></div>
 
                   <div className="create-field">
-
                     <label>Ngày bắt đầu</label>
 
                     <input
@@ -408,30 +377,27 @@ function HRInternCreate() {
                       value={form.internship_start_date}
                       onChange={handleChange}
                     />
-
                   </div>
 
                   <div className="create-field">
-
                     <label>Ngày kết thúc</label>
 
                     <input
                       type="date"
                       name="internship_end_date"
                       value={form.internship_end_date}
+                      min={
+                        form.internship_start_date || undefined
+                      }
                       onChange={handleChange}
                     />
-
                   </div>
-
                 </div>
-
               </div>
 
               {/* TÀI KHOẢN */}
 
               <div className="create-account-info">
-
                 <strong>
                   🔐 Tài khoản hệ thống
                 </strong>
@@ -439,13 +405,11 @@ function HRInternCreate() {
                 Sau khi tạo hồ sơ, hệ thống sẽ tự động
                 tạo tài khoản với username dựa trên mã
                 sinh viên và mật khẩu mặc định.
-
               </div>
 
               {/* ACTIONS */}
 
               <div className="create-actions">
-
                 <button
                   type="button"
                   className="create-cancel"
@@ -465,17 +429,11 @@ function HRInternCreate() {
                     ? "Đang tạo..."
                     : "✓ Tạo thực tập sinh"}
                 </button>
-
               </div>
-
             </form>
-
           </section>
-
         </div>
-
       </main>
-
     </div>
   );
 }

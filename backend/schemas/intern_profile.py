@@ -1,6 +1,6 @@
 from datetime import date
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, model_validator
 
 
 class InternProfileCreate(BaseModel):
@@ -16,6 +16,19 @@ class InternProfileCreate(BaseModel):
     internship_position: str | None = None
     internship_start_date: date | None = None
     internship_end_date: date | None = None
+
+    @model_validator(mode="after")
+    def validate_internship_dates(self):
+        if (
+            self.internship_start_date
+            and self.internship_end_date
+            and self.internship_end_date < self.internship_start_date
+        ):
+            raise ValueError(
+                "Ngày kết thúc phải lớn hơn hoặc bằng ngày bắt đầu"
+            )
+
+        return self
 
 
 class InternProfileResponse(BaseModel):

@@ -83,6 +83,7 @@
   margin: 0;
   font-size: 21px;
   font-weight: 700;
+  color: #0f172a; /* Ép màu chữ tiêu đề rõ nét */
 }
 
 .create-header-left p {
@@ -150,6 +151,7 @@
   border-radius: 16px;
   box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
   overflow: hidden;
+  text-align: left; /* Đảm bảo toàn bộ nội dung trong card căn trái */
 }
 
 .create-card-header {
@@ -160,6 +162,8 @@
 .create-card-header h2 {
   margin: 0;
   font-size: 19px;
+  font-weight: 700;
+  color: #0f172a; /* Ép màu tiêu đề tối */
 }
 
 .create-card-header p {
@@ -170,6 +174,7 @@
 
 .create-form {
   padding: 28px;
+  text-align: left;
 }
 
 .create-section {
@@ -203,6 +208,8 @@
 .create-section-title h3 {
   margin: 0;
   font-size: 15px;
+  font-weight: 600;
+  color: #0f172a; /* Khắc phục lỗi h3 bị mờ chữ */
 }
 
 .create-grid {
@@ -215,6 +222,7 @@
   display: flex;
   flex-direction: column;
   gap: 7px;
+  text-align: left; /* Ép label và input căn trái */
 }
 
 .create-field.full {
@@ -222,21 +230,23 @@
 }
 
 .create-field label {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
-  color: #374151;
+  color: #334155; /* Ép màu xám đậm nổi bật trên nền trắng */
+  text-align: left;
 }
 
 .create-field input,
 .create-field select {
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid #d1d5db;
+  border: 1px solid #cbd5e1;
   border-radius: 9px;
   padding: 11px 13px;
   outline: none;
   font-size: 13px;
-  background: white;
+  background: #ffffff;
+  color: #0f172a; /* Ép màu chữ đen/xám rất đậm khi nhập dữ liệu */
   transition: 0.2s;
 }
 
@@ -247,25 +257,32 @@
 }
 
 .create-field input::placeholder {
-  color: #9ca3af;
+  color: #94a3b8;
 }
 
 /* ACCOUNT INFO */
 
 .create-account-info {
-  background: #eff6ff;
-  border: 1px solid #dbeafe;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 10px;
   padding: 14px 16px;
   margin-top: 20px;
-  font-size: 12px;
-  color: #1e40af;
+  font-size: 13px;
+  color: #334155;
+  text-align: left;
 }
 
 .create-account-info strong {
   display: block;
   margin-bottom: 5px;
   font-size: 13px;
+  color: #0f172a;
+}
+
+.create-account-info p {
+  margin: 0;
+  color: #475569;
 }
 
 /* ACTIONS */
