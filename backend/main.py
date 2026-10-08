@@ -4,15 +4,30 @@ from database import engine, Base
 from models.user import User
 from models.intern_profile import InternProfile
 from routers.auth import router as auth_router
-from routers.intern_profiles import router as intern_profiles_router
+from routers.interns import router as intern_router
+from models.intern_document import InternDocument
+from routers.documents import router as documents_router
+from fastapi.middleware.cors import CORSMiddleware
+from config import ALLOWED_ORIGINS
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Intern Management System")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(auth_router)
 
 app.include_router(users_router)
-app.include_router(intern_profiles_router)
+app.include_router(intern_router)
+
+app.include_router(documents_router)
 
 @app.get("/")
 def root():

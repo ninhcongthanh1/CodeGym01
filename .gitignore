@@ -11,6 +11,9 @@ venv/
 .env
 backend/uploads/
 
+# Local development database
+backend/intern_management.db
+
 # Node
 node_modules/
 
