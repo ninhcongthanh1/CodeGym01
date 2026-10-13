@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:evaluation": "node --test tests/evaluationScoring.test.js"
   },
   "dependencies": {
     "jwt-decode": "^4.0.0",

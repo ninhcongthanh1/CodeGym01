@@ -9,13 +9,16 @@ from models.intern_document import InternDocument
 from routers.documents import router as documents_router
 from fastapi.middleware.cors import CORSMiddleware
 
+from models.mentor_evaluation import MentorAssignment, MentorEvaluation
+from routers.mentor_evaluations import router as mentor_evaluation_router
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Intern Management System")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -27,6 +30,7 @@ app.include_router(users_router)
 app.include_router(intern_router)
 
 app.include_router(documents_router)
+app.include_router(mentor_evaluation_router)
 
 @app.get("/")
 def root():
