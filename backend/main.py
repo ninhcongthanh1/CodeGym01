@@ -5,7 +5,7 @@ from models.user import User
 from models.intern_profile import InternProfile
 from routers.auth import router as auth_router
 from routers.intern_profiles import router as intern_profiles_router
-
+from routers.schedules import router as schedules_router
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Intern Management System")
@@ -13,7 +13,7 @@ app.include_router(auth_router)
 
 app.include_router(users_router)
 app.include_router(intern_profiles_router)
-
+app.include_router(schedules_router)
 @app.get("/")
 def root():
     return {
