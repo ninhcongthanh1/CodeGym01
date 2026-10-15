@@ -1,0 +1,486 @@
+.intern-application-page {
+  min-height: 100vh;
+  display: flex;
+  background: #f5f7fb;
+  color: #1f2937;
+}
+
+/* SIDEBAR */
+
+.intern-application-sidebar {
+  width: 250px;
+  min-height: 100vh;
+  background: #111827;
+  color: white;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.intern-application-logo {
+  font-size: 21px;
+  font-weight: 700;
+  padding: 0 12px;
+  margin-bottom: 35px;
+}
+
+.intern-application-logo span {
+  color: #60a5fa;
+}
+
+.intern-application-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.intern-application-nav button {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #9ca3af;
+  padding: 12px 14px;
+  border-radius: 10px;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.intern-application-nav button:hover {
+  background: #1f2937;
+  color: white;
+}
+
+.intern-application-nav button.active {
+  background: #2563eb;
+  color: white;
+}
+
+/* MAIN */
+
+.intern-application-main {
+  margin-left: 250px;
+  width: calc(100% - 250px);
+  min-height: 100vh;
+}
+
+/* HEADER */
+
+.intern-application-header {
+  height: 76px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.intern-application-header h1 {
+  margin: 0;
+  font-size: 21px;
+}
+
+.intern-application-header p {
+  margin: 5px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.intern-application-logout {
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.intern-application-logout:hover {
+  color: #ef4444;
+}
+
+/* CONTENT */
+
+.intern-application-content {
+  padding: 30px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ERROR */
+
+.intern-application-error {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  padding: 12px 15px;
+  border-radius: 9px;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+
+/* TOP */
+
+.intern-application-top {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 25px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.intern-application-top h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.intern-application-top p {
+  margin: 7px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+/* STATUS */
+
+.intern-application-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 13px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.intern-application-status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.intern-application-status.pending .status-dot {
+  background: #f59e0b;
+}
+
+.intern-application-status.approved {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.intern-application-status.approved .status-dot {
+  background: #22c55e;
+}
+
+.intern-application-status.rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.intern-application-status.rejected .status-dot {
+  background: #ef4444;
+}
+
+.intern-application-status.draft {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.intern-application-status.draft .status-dot {
+  background: #9ca3af;
+}
+
+/* CARD */
+
+.intern-application-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.intern-application-card-header {
+  padding: 20px 22px;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.intern-application-card-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.intern-application-card-header p {
+  margin: 4px 0 0;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+/* PROFILE */
+
+.intern-profile-grid {
+  padding: 22px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px 35px;
+}
+
+.intern-profile-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.intern-profile-item span {
+  color: #6b7280;
+  font-size: 11px;
+}
+
+.intern-profile-item strong {
+  color: #1f2937;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* DOCUMENT */
+
+.intern-document-count {
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.intern-document-list {
+  padding: 5px 22px;
+}
+
+.intern-document-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 15px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.intern-document-item:last-child {
+  border-bottom: none;
+}
+
+.intern-document-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #eff6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.intern-document-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.intern-document-info strong {
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.intern-document-info span {
+  color: #6b7280;
+  font-size: 11px;
+}
+
+.intern-document-status {
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.intern-document-status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.intern-document-status.approved {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.intern-document-status.rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* EMPTY */
+
+.intern-document-empty {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.intern-document-empty div {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.intern-document-empty strong {
+  display: block;
+  font-size: 14px;
+}
+
+.intern-document-empty p {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+/* SUBMIT */
+
+.intern-submit-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.intern-submit-card h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.intern-submit-card p {
+  margin: 5px 0 0;
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.intern-submit-button {
+  border: none;
+  background: #2563eb;
+  color: white;
+  padding: 11px 18px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.intern-submit-button:hover {
+  background: #1d4ed8;
+}
+
+.intern-submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* LOADING */
+
+.intern-application-loading {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f5f7fb;
+  color: #6b7280;
+}
+
+.intern-loading-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #dbeafe;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: intern-loading-spin 0.7s linear infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes intern-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 800px) {
+  .intern-profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .intern-application-top {
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .intern-submit-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .intern-submit-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .intern-application-sidebar {
+    display: none;
+  }
+
+  .intern-application-main {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .intern-application-header {
+    padding: 0 20px;
+  }
+
+  .intern-application-content {
+    padding: 20px;
+  }
+
+  .intern-application-top {
+    flex-direction: column;
+  }
+}
