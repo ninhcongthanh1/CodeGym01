@@ -22,6 +22,7 @@ app.add_middleware(
 )
 
 app.include_router(auth_router)
+app.include_router(internship_program_router)
 
 app.include_router(users_router)
 app.include_router(intern_router)
